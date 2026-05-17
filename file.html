@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrozeMC Shop</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0a0a0f;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #0d0d1a 0%, #1a0a2e 50%, #0d0d1a 100%);
+            border-bottom: 2px solid #7c3aed;
+            padding: 20px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, #7c3aed, #a855f7, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: #ec4899;
+            -webkit-text-fill-color: #ec4899;
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            color: #a0a0b0;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            letter-spacing: 1px;
+        }
+
+        nav a:hover {
+            color: #a855f7;
+        }
+
+        .cart-btn {
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            color: white !important;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 700 !important;
+            transition: all 0.3s !important;
+        }
+
+        .cart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.5);
+        }
+
+        /* Status Bar */
+        .status-bar {
+            background: linear-gradient(90deg, #0f0f1e, #1a0a2e, #0f0f1e);
+            border-bottom: 1px solid #2d2d4e;
+            padding: 12px 60px;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            font-size: 0.85rem;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #a0a0b0;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .status-item span.highlight {
+            color: #a855f7;
+            font-weight: 600;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #0d0d1a 0%, #1a0a2e 40%, #2d0a4e 70%, #0d0d1a 100%);
+            padding: 80px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(124, 58, 237, 0.1) 0%, transparent 60%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, #7c3aed, #a855f7, #ec4899, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #a0a0b0;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .hero-badges {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .badge {
+            background: rgba(124, 58, 237, 0.15);
+            border: 1px solid rgba(124, 58, 237, 0.4);
+            color: #a855f7;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Section */
+        .section {
+            padding: 60px 60px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title .icon {
+            font-size: 2rem;
+        }
+
+        .section-subtitle {
+            color: #a0a0b0;
+            margin-bottom: 40px;
+            font-size: 0.95rem;
+        }
+
+        /* Ranks Grid */
+        .ranks-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 16px;
+        }
+
+        .rank-card {
+            background: linear-gradient(145deg, #0f0f1e, #1a1a2e);
+            border: 1px solid #2d2d4e;
+            border-radius: 16px;
+            padding: 24px 16px;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .rank-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+
+        .rank-card.ember::before { background: linear-gradient(90deg, #f97316, #fb923c); }
+        .rank-card.nova::before { background: linear-gradient(90deg, #eab308, #facc15); }
+        .rank-card.phantom::before { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+        .rank-card.titan::before { background: linear-gradient(90deg, #06b6d4, #22d3ee); }
+        .rank-card.ascended::before { background: linear-gradient(90deg, #ec4899, #f472b6); }
+        .rank-card.grozep::before { background: linear-gradient(90deg, #7c3aed, #a855f7, #ec4899); }
+
+        .rank-card:hover {
+            transform: translateY(-8px);
+            border-color: #7c3aed;
+            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.2);
+        }
+
+        .rank-card.popular {
+            border-color: #a855f7;
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: linear-gradient(135deg, #7c3aed, #ec4899);
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .rank-icon {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+        }
+
+        .rank-name {
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .rank-card.ember .rank-name { color: #fb923c; }
+        .rank-card.nova .rank-name { color: #facc15; }
+        .rank-card.phantom .rank-name { color: #a78bfa; }
+        .rank-card.titan .rank-name { color: #22d3ee; }
+        .rank-card.ascended .rank-name { color: #f472b6; }
+        .rank-card.grozep .rank-name {
+            background: linear-gradient(90deg, #a855f7, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .rank-label {
+            font-size: 0.7rem;
+            color: #6b6b8a;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .rank-price {
+            margin-bottom: 16px;
+        }
+
+        .rank-price .original {
+            font-size: 0.8rem;
+            color: #6b6b8a;
+            text-decoration: line-through;
+        }
+
+        .rank-price .current {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: #e0e0e0;
+        }
+
+        .rank-price .currency {
+            font-size: 0.9rem;
+            color: #a0a0b0;
+        }
+
+        .rank-perks {
+            list-style: none;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .rank-perks li {
+            font-size: 0.78rem;
+            color: #a0a0b0;
+            padding: 4px 0;
+            border-bottom: 1px solid #1e1e2e;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .rank-perks li .check { color: #22c55e; }
+        .rank-perks li .cross { color: #4b4b6a; }
+
+        .buy-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 0.5px;
+        }
+
+        .rank-card.ember .buy-btn { background: linear-gradient(135deg, #f97316, #fb923c); color: white; }
+        .rank-card.nova .buy-btn { background: linear-gradient(135deg, #eab308, #facc15); color: #1a1a00; }
+        .rank-card.phantom .buy-btn { background: linear-gradient(135deg, #8b5cf6, #a78bfa); color: white; }
+        .rank-card.titan .buy-btn { background: linear-gradient(135deg, #06b6d4, #22d3ee); color: #001a1a; }
+        .rank-card.ascended .buy-btn { background: linear-gradient(135deg, #ec4899, #f472b6); color: white; }
+        .rank-card.grozep .buy-btn { background: linear-gradient(135deg, #7c3aed, #a855f7, #ec4899); color: white; }
+
+        .buy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        /* Crate Keys */
+        .crates-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .crate-card {
+            background: linear-gradient(145deg, #0f0f1e, #1a1a2e);
+            border: 1px solid #2d2d4e;
+            border-radius: 16px;
+            padding: 28px 16px;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .crate-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+        }
+
+        .crate-card.celestial::before { background: linear-gradient(90deg, #60a5fa, #93c5fd); }
+        .crate-card.void::before { background: linear-gradient(90deg, #1e1b4b, #4c1d95); }
+        .crate-card.mythic::before { background: linear-gradient(90deg, #9333ea, #c084fc); }
+        .crate-card.galaxy::before { background: linear-gradient(90deg, #4f46e5, #818cf8); }
+        .crate-card.omega::before { background: linear-gradient(90deg, #dc2626, #f87171); }
+        .crate-card.monthly::before { background: linear-gradient(90deg, #d97706, #fbbf24); }
+
+        .crate-card:hover {
+            transform: translateY(-8px);
+            border-color: #7c3aed;
+            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.2);
+        }
+
+        .crate-icon {
+            font-size: 3rem;
+            margin-bottom: 12px;
+        }
+
+        .crate-name {
+            font-size: 1rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .crate-card.celestial .crate-name { color: #93c5fd; }
+        .crate-card.void .crate-name { color: #a78bfa; }
+        .crate-card.mythic .crate-name { color: #c084fc; }
+        .crate-card.galaxy .crate-name { color: #818cf8; }
+        .crate-card.omega .crate-name { color: #f87171; }
+        .crate-card.monthly .crate-name { color: #fbbf24; }
+
+        .crate-rarity {
+            font-size: 0.7rem;
+            color: #6b6b8a;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .crate-price {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #e0e0e0;
+            margin-bottom: 8px;
+        }
+
+        .crate-price .rs {
+            font-size: 1rem;
+            color: #a0a0b0;
+        }
+
+        .crate-desc {
+            font-size: 0.75rem;
+            color: #6b6b8a;
+            margin-bottom: 20px;
+        }
+
+        .crate-card.celestial .buy-btn { background: linear-gradient(135deg, #3b82f6, #60a5fa); color: white; }
+        .crate-card.void .buy-btn { background: linear-gradient(135deg, #4c1d95, #7c3aed); color: white; }
+        .crate-card.mythic .buy-btn { background: linear-gradient(135deg, #9333ea, #c084fc); color: white; }
+        .crate-card.galaxy .buy-btn { background: linear-gradient(135deg, #4f46e5, #818cf8); color: white; }
+        .crate-card.omega .buy-btn { background: linear-gradient(135deg, #dc2626, #f87171); color: white; }
+        .crate-card.monthly .buy-btn { background: linear-gradient(135deg, #d97706, #fbbf24); color: #1a0a00; }
+
+        /* Bundles */
+        .bundles-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #a855f7;
+        }
+
+        .bundles-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .bundle-card {
+            background: linear-gradient(145deg, #0f0f1e, #1a1a2e);
+            border: 1px solid #2d2d4e;
+            border-radius: 14px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+
+        .bundle-card:hover {
+            border-color: #7c3aed;
+            transform: translateY(-4px);
+        }
+
+        .bundle-name {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #e0e0e0;
+        }
+
+        .bundle-contents {
+            font-size: 0.8rem;
+            color: #6b6b8a;
+            margin-bottom: 12px;
+        }
+
+        .bundle-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .bundle-savings {
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 8px;
+        }
+
+        .bundle-price {
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: #a855f7;
+        }
+
+        /* Shards */
+        .shards-section {
+            background: linear-gradient(135deg, #0f0f1e, #1a0a2e);
+            border-top: 1px solid #2d2d4e;
+            border-bottom: 1px solid #2d2d4e;
+        }
+
+        .shards-info {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .shard-use {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            color: #a855f7;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+
+        .shards-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+        }
+
+        .shard-card {
+            background: linear-gradient(145deg, #0f0f1e, #1a1a2e);
+            border: 1px solid #2d2d4e;
+            border-radius: 16px;
+            padding: 28px 16px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .shard-card:hover {
+            transform: translateY(-6px);
+            border-color: #7c3aed;
+            box-shadow: 0 16px 30px rgba(124, 58, 237, 0.2);
+        }
+
+        .shard-icon {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+        }
+
+        .shard-amount {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #a855f7;
+            margin-bottom: 4px;
+        }
+
+        .shard-label {
+            font-size: 0.7rem;
+            color: #6b6b8a;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .shard-price {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: #e0e0e0;
+            margin-bottom: 16px;
+        }
+
+        .shard-card .buy-btn {
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            color: white;
+        }
+
+        /* Checkout */
+        .checkout-section {
+            background: linear-gradient(135deg, #0d0d1a, #1a0a2e);
+            border-top: 2px solid #7c3aed;
+        }
+
+        .checkout-box {
+            background: linear-gradient(145deg, #0f0f1e, #1a1a2e);
+            border: 1px solid #2d2d4e;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .checkout-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            text-align: center;
+            background: linear-gradient(90deg, #7c3aed, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .checkout-fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .field-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: #a0a0b0;
+            margin-bottom: 8px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .field-group input {
+            width: 100%;
+            background: #0a0a0f;
+            border: 1px solid #2d2d4e;
+            border-radius: 10px;
+            padding: 14px 16px;
+            color: #e0e0e0;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .field-group input:focus {
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+        }
+
+        .checkout-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #2d2d4e;
+            padding-top: 24px;
+        }
+
+        .order-total {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #e0e0e0;
+        }
+
+        .order-total span {
+            font-size: 1rem;
+            color: #a0a0b0;
+            font-weight: 400;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .checkout-btns {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-cancel {
+            padding: 14px 28px;
+            background: transparent;
+            border: 1px solid #2d2d4e;
+            border-radius: 10px;
+            color: #6b6b8a;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-cancel:hover {
+            border-color: #7c3aed;
+            color: #a855f7;
+        }
+
+        .btn-checkout {
+            padding: 14px 36px;
+            background: linear-gradient(135deg, #7c3aed, #a855f7, #ec4899);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-checkout:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: #050508;
+            border-top: 1px solid #1a1a2e;
+            padding: 24px 60px;
+            text-align: center;
+            color: #4b4b6a;
+            font-size: 0.8rem;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #2d2d4e, transparent);
+            margin: 0 60px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">Groze<span>MC</span></div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Ranks</a>
+            <a href="#">Crates</a>
+            <a href="#">Shards</a>
+            <a href="#">Support</a>
+            <a href="#" class="cart-btn">🛒 Cart (0)</a>
+        </nav>
+    </header>
+
+    <!-- Status Bar -->
+    <div class="status-bar">
+        <div class="status-item"><div class="status-dot"></div> Server <span class="highlight">Online</span></div>
+        <div class="status-item">👥 <span class="highlight">2,400+</span> Players</div>
+        <div class="status-item">⭐ <span class="highlight">98%</span> Rated</div>
+        <div class="status-item">⚡ <span class="highlight">Instant</span> Delivery</div>
+        <div class="status-item">🕐 <span class="highlight">24/7</span> Support</div>
+    </div>
+
+    <!-- Hero -->
+    <div class="hero">
+        <h1>GrozeMC Store</h1>
+        <p>Upgrade your experience with exclusive ranks, crate keys & shards</p>
+        <div class="hero-badges">
+            <span class="badge">🔒 Secure Payments</span>
+            <span class="badge">⚡ Instant Delivery</span>
+            <span class="badge">♾️ Permanent Perks</span>
+            <span class="badge">🎮 100% Legit</span>
+        </div>
+    </div>
+
+    <!-- Ranks Section -->
+    <div class="section">
+        <div class="section-title"><span class="icon">⚔️</span> Ranks</div>
+        <div class="section-subtitle">One-time purchase · Permanent perks · Instant activation</div>
+
+        <div class="ranks-grid">
+
+            <!-- Ember -->
+            <div class="rank-card ember">
+                <div class="rank-icon">🔥</div>
+                <div class="rank-name">Ember</div>
+                <div class="rank-label">Starter</div>
+                <div class="rank-price">
+                    <div class="original">Rs 99</div>
+                    <div class="current"><span class="currency">Rs </span>79</div>
+                </div>
+                <ul class="rank-perks">
+                    <li><span class="check">✔</span> Custom Prefix</li>
+                    <li><span class="check">✔</span> Color Chat</li>
+                    <li><span class="check">✔</span> 3 Homes</li>
+                    <li><span class="check">✔</span> 24h Kit</li>
+                    <li><span class="cross">✘</span> Lobby Fly</li>
+                    <li><span class="cross">✘</span> /nick</li>
+                </ul>
+                <button class="buy-btn">Buy Now</button>
+            </div>
+
+            <!-- Nova -->
+            <div class="rank-card nova popular">
+                <div class="popular-badge">POPULAR</div>
+                <div class="rank-icon">🌟</div>
+                <div class="rank-name">Nova</div>
+                <div class="rank-label">Most Popular</div>
+                <div class="rank-price">
+                    <div class="original">Rs 149</div>
+                    <div class="current"><span class="currency">Rs </span>119</div>
+                </div>
+                <ul class="rank-perks">
+                    <li><span class="check">✔</span> Custom Prefix</li>
+                    <li><span class="check">✔</span> Color Chat</li>
+                    <li><span class="check">✔</span> 6 Homes</li>
+                    <li><span class="check">✔</span> 18h Kit</li>
+                    <li><span class="check">✔</span> Lobby Fly</li>
+                    <li><span class="cross">✘</span> /nick</li>
+                </ul>
+                <button class="buy-btn">Buy Now</button>
+            </div>
+
+            <!-- Phantom -->
+            <div class="rank-card phantom">
+                <div class="rank-icon">👻</div>
+                <div class="rank-name">Phantom</div>
+                <div class="rank-label">Elite</div>
+                <div class="rank-price">
+                    <div class="original">Rs 249</div>
+                    <div class="current"><span class="currency">Rs </span>199</div>
+                </div>
+                <ul class="rank-perks">
+                    <li><span class="check">✔</span> Custom Prefix</li>
+                    <li><span class="check">✔</span> Color Chat</li>
+                    <li><span class="check">✔</span> 12 Homes</li>
+                    <li><span class="check">✔</span> 12h Kit</li>
+                    <li><span class="check">✔</span> Lobby Fly</li>
+                    <li><span class="check">✔</span> /nick</li>
+                </ul>
+                <button class="buy-btn">Buy Now</button>
+            </div>
+
+            <!-- Titan -->
+            <div class="rank-card titan">
+                <div class="rank-icon">🏔️</div>
+                <div class="rank-name">Titan</div>
+                <div class="rank-label">Premium</div>
+                <div class="rank-price">
+                    <div class="original">Rs 299</div>
+                    <div class="current"><span class="currency">Rs </span>249</div>
+                </div>
+                <ul class="rank-perks">
+                    <li><span class="check">✔</span> Custom Prefix</li>
+                    <li><span class="check">✔</span> Color Chat</li>
+                    <li><span class="check">✔</span> 20 Homes</li>
+                    <li><span class="check">✔</span> 8h Kit</li>
+                    <li><span class="check">✔</span> Particles</li>
+                    <li><span class="check">✔</span> /nick</li>
+                </ul>
+                <button class="buy-btn">Buy Now</button>
+            </div>
+
+            <!-- Ascended -->
+            <div class="rank-card ascended">
+                <div class="rank-icon">🚀</div>
+                <div class="rank-name">Ascended</div>
+                <div class="rank-label">Legendary</div>
+                <div class="rank-price">
+                    <div class="original">Rs 499</div>
+                    <div class="current"><span class="currency">Rs </span>399</div>
+                </div>
+                <ul class="rank-perks">
+                    <li><span class="check">✔</span> Custom Prefix</li>
+                    <li><span class="check">✔</span> 35 Homes</li>
+                    <li><span class="check">✔</span> 4h Kit</li>
+                    <li><span class="check">✔</span> /disguise</li>
+                    <li><span class="check">✔</span> Monthly Key</li>
+                    <li><span class="check">✔</span> 250 Shards/mo</li>
+                </ul>
+                <button class="buy-btn">Buy Now</button>
+            </div>
+
+            <!-- Groze+ -->
+            <div class="rank-card grozep">
+                <div class="popular-badge">MAX</div>
+                <div class="rank-icon">👑</div>
+                <div class="rank-name">Groze+</div>
+                <div class="rank-label">Max Prestige</div>
+                <div class="rank-price">
+                    <div class="original">Rs 649</div>
+                    <div class="current"><span class="currency">Rs </span>499</div>
+                </div>
+                <ul class="rank-perks">
+                    <li><span class="check">✔</span> Everything Above</li>
+                    <li><span class="check">✔</span> Unlimited Homes</li>
+                    <li><span class="check">✔</span> 1h Kit</li>
+                    <li><span class="check">✔</span> VIP Discord</li>
+                    <li><span class="check">✔</span> Weekly Leg. Key</li>
+                    <li><span class="check">✔</span> 500 Shards/mo</li>
+                </ul>
+                <button class="buy-btn">Buy Now</button>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Crate Keys Section -->
+    <div class="section">
+        <div class="section-title"><span class="icon">🗝️</span> Crate Keys</div>
+        <div class="section-subtitle">Better keys = Rarer rewards · Instant delivery to your account</div>
+
+        <div class="crates-grid">
+
+            <div class="crate-card celestial">
+                <div class="crate-icon">🌌</div>
+                <div class="crate-name">Celestial</div>
+                <div class="crate-rarity">Common</div>
+                <div class="crate-price"><span class="rs">Rs </span>50</div>
+                <div class="crate-desc">Standard drops & rewards</div>
+                <button class="buy-btn">Buy Now</button>
+            </div>
+
+            <div class="crate-card void">
+                <div class="crate-icon">🌑</div>
+                <div class="crate-name">Void</div>
+                <div class="crate-rarity">Uncommon</div>
+                <div class="crate-price"><span class="rs">Rs </span>80</div>
+                <div class="crate-desc">Improved drop chances</div>
+                <button class="buy-btn">Buy Now</button>
+            </div>
+
+            <div class="crate-card mythic">
+                <div class="crate-icon">🔮</div>
+                <div class="crate-name">Mythic</div>
+                <div class="crate-rarity">Rare</div>
+                <div class="crate-price"><span class="rs">Rs </span>120</div>
+                <div class="crate-desc">High rarity rewards</div>
+                <button class="buy-btn">Buy Now</button>
+            </div>
+
+            <div class="crate-card galaxy">
+                <div class="crate-icon">🌠</div>
+                <div class="crate-name">Galaxy</div>
+                <div class="crate-rarity">Epic</div>
+                <div class="crate-price"><span class="rs">Rs </span>180</div>
+                <div class="crate-desc">Epic loot + Bonus spin</div>
+                <button class="buy-btn">Buy Now</button>
+            </div>
+
+            <div class="crate-card omega">
+                <div class="crate-icon">⚡</div>
+                <div class="crate-name">Omega</div>
+                <div class="crate-rarity">Legendary</div>
+                <div class="crate-price"><span class="rs">Rs </span>300</div>
+                <div class="crate-desc">Max loot + Double drops</div>
+                <button class="buy-btn">Buy Now</button>
+            </div>
+
+            <div class="crate-card monthly">
+                <div class="crate-icon">📅</div>
+                <div class="crate-name">Monthly</div>
+                <div class="crate-rarity">Special</div>
+                <div class="crate-price"><span class="rs">Rs </span>350</div>
+                <div class="crate-desc">Exclusive monthly rewards</div>
+                <button class="buy-btn">Buy Now</button>
+            </div>
+
+        </div>
+
+        <!-- Bundles -->
+        <div class="bundles-title">🎁 Key Bundles — Save More, Get More</div>
+        <div class="bundles-grid">
+
+            <div class="bundle-card">
+                <div class="bundle-name">⭐ Starter Pack</div>
+                <div class="bundle-contents">3× Celestial + 1× Void Key</div>
+                <div class="bundle-bottom">
+                    <span class="bundle-savings">Save 15%</span>
+                    <span class="bundle-price">Rs 195</span>
+                </div>
+            </div>
+
+            <div class="bundle-card">
+                <div class="bundle-name">🔥 Mid Tier Pack</div>
+                <div class="bundle-contents">2× Mythic + 2× Galaxy Key</div>
+                <div class="bundle-bottom">
+                    <span class="bundle-savings">Save 18%</span>
+                    <span class="bundle-price">Rs 490</span>
+                </div>
+            </div>
+
+            <div class="bundle-card">
+                <div class="bundle-name">💎 Elite Pack</div>
+                <div class="bundle-contents">2× Omega + 1× Monthly Key</div>
+                <div class="bundle-bottom">
+                    <span class="bundle-savings">Save 20%</span>
+                    <span class="bundle-price">Rs 755</span>
+                </div>
+            </div>
+
+            <div class="bundle-card">
+                <div class="bundle-name">👑 Ultimate Pack</div>
+                <div class="bundle-contents">1× of Every Key Type</div>
+                <div class="bundle-bottom">
+                    <span class="bundle-savings">Best Value</span>
+                    <span class="bundle-price">Rs 999</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Shards Section -->
+    <div class="section shards-section">
+        <div class="section-title"><span class="icon">💎</span> Shards</div>
+        <div class="section-subtitle">GrozeMC's premium in-game currency</div>
+        <div class="shards-info">
+            <span class="shard-use">⚗️ Custom Enchants</span>
+            <span class="shard-use">🎨 Cosmetics & Trails</span>
+            <span class="shard-use">🛍️ Shard Shop</span>
+            <span class="shard-use">🏆 Exclusive Tournaments</span>
+        </div>
+        <div class="shards-grid">
+
+            <div class="shard-card">
+                <div class="shard-icon">🔷</div>
+                <div class="shard-amount">250 Shards</div>
+                <div class="shard-label">Starter</div>
+                <div class="shard-price"><small style="font-size:0.9rem;color:#a0a0b0;">Rs </small>49</div>
+                <button class="buy-btn">Buy Now</button>
+            </div>
+
+            <div class="shard-card">
+                <div class="shard-icon">💠</div>
+                <div class="shard-amount">600 Shards</div>
+                <div class="shard-label">Standard</div>
+                <div class="shard-price"><small style="font-size:0.9rem;color:#a0a0b0;">Rs </small>99</div>
+                <button class="buy-btn">Buy Now</button>
+            </div>
+
+            <div class="shard-card">
+                <div class="shard-icon">🔹</div>
+                <div class="shard-amount">1,200 Shards</div>
+                <div class="shard-label">Value</div>
+                <div class="shard-price"><small style="font-size:0.9rem;color:#a0a0b0;">Rs </small>179</div>
+                <button class="buy-btn">Buy Now</button>
+            </div>
+
+            <div class="shard-card">
+                <div class="shard-icon">💎</div>
+                <div class="shard-amount">2,500 Shards</div>
+                <div class="shard-label">Premium</div>
+                <div class="shard-price"><small style="font-size:0.9rem;color:#a0a0b0;">Rs </small>299</div>
+                <button class="buy-btn">Buy Now</button>
+            </div>
+
+            <div class="shard-card">
+                <div class="shard-icon">⚡</div>
+                <div class="shard-amount">5,000 Shards</div>
+                <div class="shard-label">Max Pack</div>
+                <div class="shard-price"><small style="font-size:0.9rem;color:#a0a0b0;">Rs </small>549</div>
+                <button class="buy-btn">Buy Now</button>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Checkout -->
+    <div class="section checkout-section">
+        <div class="checkout-box">
+            <div class="checkout-title">🛒 Checkout</div>
+            <div class="checkout-fields">
+                <div class="field-group">
+                    <label>Minecraft Username</label>
+                    <input type="text" placeholder="Enter your IGN...">
+                </div>
+                <div class="field-group">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="Enter your email...">
+                </div>
+            </div>
+            <div class="checkout-bottom">
+                <div class="order-total">
+                    <span>Order Total</span>
+                    Rs 0.00
+                </div>
+                <div class="checkout-btns">
+                    <button class="btn-cancel">Cancel</button>
+                    <button class="btn-checkout">Proceed to Checkout →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        GrozeMC is not affiliated with Mojang or Microsoft. · All purchases are permanent and non-refundable. · Prices in Indian Rupees (Rs).
+    </footer>
+
+</body>
+</html>
